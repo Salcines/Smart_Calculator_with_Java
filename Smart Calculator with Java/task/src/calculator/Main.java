@@ -1,13 +1,12 @@
 package calculator;
 
-import java.net.StandardSocketOptions;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         final String EXIT_COMMAND = "/exit";
+        final String HELP_COMMAND = "/help";
 
         Scanner scanner = new Scanner(System.in);
         // put your code here
@@ -22,17 +21,26 @@ public class Main {
                 continue;
             }
 
-            String[] numbers = line.split("\\s+");
-            int firstNumber =Integer.parseInt(numbers[0]);
-            int secondNumber = numbers.length > 1 ? Integer.parseInt(numbers[1]) : 0;
+            if (line.equals(HELP_COMMAND)) {
+                System.out.println("The program calculates the sum of numbers");
+                continue;
+            }
 
-            add(firstNumber, secondNumber);
+            String[] numbers = line.split("\\s+");
+            long result = Long.parseLong(numbers[0]);
+
+            for (int i = 1; i < numbers.length; i++) {
+                long nextNumber = Long.parseLong(numbers[i]);
+                result = add(result, nextNumber);
+            }
+
+            System.out.println(result);
         }
         System.out.println("Bye!");
     }
 
-    public static void add(int firstNumber,
-                           int secondNumber) {
-        System.out.println(firstNumber + secondNumber);
+    public static long add(long firstNumber,
+                           long secondNumber) {
+        return firstNumber + secondNumber;
     }
 }
